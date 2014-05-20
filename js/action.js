@@ -2,6 +2,15 @@ var DownloadActionType = "download"
 var RunActionType = "run"
 var UploadActionType = "upload"
 
+var Actions = Backbone.Collection.extend({
+    model: Action,
+    toJSON: function() {
+        return this.map(function(action) {
+            return action.wrappedRepresentation()
+        })
+    }
+})
+
 var Action = Backbone.Model.extend({
     wrappedRepresentation: function() {
         return {
@@ -9,6 +18,14 @@ var Action = Backbone.Model.extend({
             args: JSON.stringify(this.toJSON())
         }
     },
+
+    toJSON: function() {
+        json = this.attributes
+        if (this.envs) {
+            json.envs = this.envs.toJSON()
+        }
+        return json
+    }
 })
 
 function NewDownloadAction() {
@@ -30,6 +47,7 @@ function NewUploadAction() {
         from: "",
         compress: false
     })
+    console.log(action)
     return action
 }
 
@@ -38,7 +56,7 @@ function NewRunAction() {
     action.type = RunActionType
     action.set({
         script: "",
-        env: "",
     })
+    action.envs = new EnvironmentVariables()
     return action
 }

@@ -74,22 +74,23 @@ var RunActionView = Backbone.View.extend({
     "change": "updateModel",
   },
 
-  render: function() {
+  initialize: function() {
     html = "<div>Upload</div>"
     html += '<div class="entry" for="script"><label>Script</label><br><textarea name="script"></textarea></div>'
-    html += '<div class="entry" for="env"><label>Environment</label><input type="text" name="env"></input></div>'
 
     this.$el.html(html);
+    this.envVariablesView = new EnvironmentVariablesView({collection: this.model.envs})
+    this.$el.append(this.envVariablesView.$el)
+  },
 
+  render: function() {
     this.$('[name="script"]').val(this.model.get("script"))
-    this.$('[name="env"]').val(this.model.get("env"))
     return this;
   },
 
   updateModel: function() {
     this.model.set({
         script: this.$('[name="script"]').val(),
-        env: this.$('[name="env"]').val(),
     }, {silent: true})
   },
 })
