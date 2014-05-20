@@ -3,16 +3,25 @@ var DownloadActionView = Backbone.View.extend({
     this.listenTo(this.model, "change", this.render)
   },
 
-  className: "download-action-view",
+  tagName: "form",
+  className: "form-horizontal",
   events: {
     "change": "updateModel",
   },
 
   render: function() {
-    html = "<div>Download</div>"
-    html += '<div class="entry" for="from"><label>Download URL</label><input type="text" name="from"></input></div>'
-    html += '<div class="entry" for="to"><label>Container Path</label><input type="text" name="to"></input></div>'
-    html += '<div class="entry" for="extract"><label>Extract</label><input type="checkbox" name="extract"></input></div>'
+    html = '<div class="form-group"><h4 class="text-primary"><span class="glyphicon glyphicon-download"></span> Download</h4></div>'
+    html += '<div class="form-group">'
+    html += '<label for="from" class="col-sm-2 control-label text-right">Download URL</label>'
+    html += '<div class="col-sm-10"><input type="text" class="form-control" name="from" placeholder="http://example.com/download"></input></div>'
+    html += '</div>'
+    html += '<div class="form-group">'
+    html += '<label for="to" class="col-sm-2 control-label text-right">Container Path</label>'
+    html += '<div class="col-sm-10"><input type="text" class="form-control" name="to" placeholder="/some/path"></input></div>'
+    html += '</div>'
+    html += '<div class="form-group"><div class="col-sm-offset-2 col-sm-10"><div class="checkbox">'
+    html += '<label><input type="checkbox" name="extract"> Extract</label>'
+    html += '</div></div></div>'
 
     this.$el.html(html);
 
@@ -36,16 +45,25 @@ var UploadActionView = Backbone.View.extend({
     this.listenTo(this.model, "change", this.render)
   },
 
-  className: "upload-action-view",
+  tagName: "form",
+  className: "form-horizontal",
   events: {
     "change": "updateModel",
   },
 
   render: function() {
-    html = "<div>Upload</div>"
-    html += '<div class="entry" for="from"><label>Container Path</label><input type="text" name="from"></input></div>'
-    html += '<div class="entry" for="to"><label>Upload URL</label><input type="text" name="to"></input></div>'
-    html += '<div class="entry" for="compress"><label>Compress</label><input type="checkbox" name="compress"></input></div>'
+    html = '<div class="form-group"><h4 class="text-primary"><span class="glyphicon glyphicon-upload"></span> Upload</h4></div>'
+    html += '<div class="form-group">'
+    html += '<label for="from" class="col-sm-2 control-label text-right">Container Path</label>'
+    html += '<div class="col-sm-10"><input type="text" class="form-control" name="from" placeholder="/some/path"></input></div>'
+    html += '</div>'
+    html += '<div class="form-group">'
+    html += '<label for="to" class="col-sm-2 control-label text-right">Upload URL</label>'
+    html += '<div class="col-sm-10"><input type="text" class="form-control" name="to" placeholder="http://example.com/upload"></input></div>'
+    html += '</div>'
+    html += '<div class="form-group"><div class="col-sm-offset-2 col-sm-10"><div class="checkbox">'
+    html += '<label><input type="checkbox" name="compress"> Compress</label>'
+    html += '</div></div></div>'
 
     this.$el.html(html);
 
@@ -69,18 +87,32 @@ var RunActionView = Backbone.View.extend({
     this.listenTo(this.model, "change", this.render)
   },
 
-  className: "upload-action-view",
+  tagName: "form",
+  className: "form-horizontal",
   events: {
     "change": "updateModel",
+      "click button.add-env": "addEnv"
   },
 
   initialize: function() {
-    html = "<div>Upload</div>"
-    html += '<div class="entry" for="script"><label>Script</label><br><textarea name="script"></textarea></div>'
+    html = '<div class="form-group"><h4 class="text-primary"><span class="glyphicon glyphicon-play-circle"></span> Run</h4></div>'
+    html += '<div class="form-group">'
+    html += '<label for="script" class="col-sm-2 control-label text-right">Script</label>'
+    html += '<div class="col-sm-10"><textarea class="form-control" name="script" placeholder="#!/bin/bash"></textarea></div>'
+    html += '</div>'
+    html += '<div class="form-group">'
+    html += '<label class="col-sm-2 control-label text-right">Environment</label>'
+    html += '<div class="col-sm-10"><button type=button class="btn btn-default btn-sm add-env"><span class="glyphicon glyphicon-plus"></span> Add</button></div>'
+    html += '</div>'
+    console.log(html)
 
     this.$el.html(html);
     this.envVariablesView = new EnvironmentVariablesView({collection: this.model.envs})
     this.$el.append(this.envVariablesView.$el)
+  },
+
+  addEnv: function() {
+      this.model.envs.push(new EnvironmentVariable())
   },
 
   render: function() {

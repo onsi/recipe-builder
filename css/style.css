@@ -1,0 +1,9 @@
+.env {
+    display: inline-block;
+    width:200px;
+    margin-left:10px;
+    margin-top:10px;
+}
+.env.left {
+    margin-left:146px;
+}

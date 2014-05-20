@@ -1,19 +1,30 @@
 <html>
 <head>
-  <link rel="stylesheet" type="text/css" href="./style/style.css">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="css/bootstrap.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+
   <script src="./externals/head.js"></script>
   <script src="./recipe-builder.js"></script>
 </head>
 
 <body>
-  <div class="main">
-    <div class="recipe-list">
+  <div class="main container">
+    <div class="page-header">
+      <h2>Containerator</h2>
     </div>
-    <div class="recipe-buttons">
-      <div class="button download">Download</div>
-      <div class="button run">Run</div>
-      <div class="button upload">Upload</div>
-      <div class="json">JSON</div>
+    <div class="row">
+      <div class="recipe-list col-md-9">
+      </div>
+      <div class="recipe-buttons col-md-3">
+        <button type="button" class="btn btn-lg btn-primary btn-block download"><span class="glyphicon glyphicon-download"></span> Download</button>
+        <button type="button" class="btn btn-lg btn-primary btn-block run"><span class="glyphicon glyphicon-play-circle"></span> Run</button>
+        <button type="button" class="btn btn-lg btn-primary btn-block upload"><span class="glyphicon glyphicon-upload"></span> Upload</button>
+        <button type="button" class="btn btn-lg btn-danger btn-block json"> JSON</button>
+      </div>
     </div>
   </div>
 </body>

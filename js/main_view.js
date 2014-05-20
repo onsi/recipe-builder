@@ -1,9 +1,9 @@
 var MainView = Backbone.View.extend({
   events: {
-    "click .button.download": "addDownloadAction",
-    "click .button.run": "addRunAction",
-    "click .button.upload": "addUploadAction",
-    "click .json": "toJSON"
+    "click button.download": "addDownloadAction",
+    "click button.run": "addRunAction",
+    "click button.upload": "addUploadAction",
+    "click button.json": "toJSON"
   },
 
   initialize: function() {

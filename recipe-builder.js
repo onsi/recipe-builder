@@ -3,6 +3,7 @@
   js.push('./externals/jquery.js');
   js.push('./externals/underscore.js');
   js.push('./externals/backbone.js');
+  js.push('./externals/bootstrap.js');
 
   js.push('./js/environment_variable.js');
   js.push('./js/action.js');

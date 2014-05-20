@@ -4,24 +4,19 @@ var EnvironmentVariablesView = Backbone.View.extend({
     this.listenTo(this.collection, "remove", this.removeEnv)
     this.listenTo(this.collection, "reset", this.resetEnv)
     this.subviews = {}
-
-    this.$el.html('<div class="button add">Add</div>')
   },
 
   tagName: "ul",
-  className: "environment-variables",
-  events: {
-    "click .button.add": "add"
-  },
+  className: "list-unstyled",
 
-  add: function() {
-    env = new EnvironmentVariable()
-    this.collection.push(env)
+  deleteEnv: function(model) {
+    this.collection.remove(model)
   },
 
   addEnv: function(model) {
     view = new EnvironmentVariableView({
       model: model,
+      delegate: this
     })
     this.$el.append(view.$el)
     view.render()
@@ -43,7 +38,8 @@ var EnvironmentVariablesView = Backbone.View.extend({
 })
 
 var EnvironmentVariableView = Backbone.View.extend({
-  initialize: function() {
+  initialize: function(args) {
+    this.delegate = args.delegate
     this.listenTo(this.model, "change", this.render)
   },
 
@@ -51,17 +47,23 @@ var EnvironmentVariableView = Backbone.View.extend({
   className: "environment-variable",
   events: {
     "change": "updateModel",
+    "click button.delete": "delete"
   },
 
   render: function() {
-    html = '<label for="key">Key</label><input type="text" name="key"></input>'
-    html += '<label for="value">Value</label><input type="text" name="value"></input>'
+    html = '<input type="text" class="form-control env left" name="key" placeholder="KEY"></input>'
+    html += '<input type="text" class="form-control env" name="value" placeholder="VALUE"></input>'
+    html += '<button type="button" class="btn btn-link btn-sm delete"><span class="glyphicon glyphicon-trash"></span></button>'
 
     this.$el.html(html);
 
     this.$('[name="key"]').val(this.model.get("key"))
     this.$('[name="value"]').val(this.model.get("value"))
     return this;
+  },
+
+  delete: function() {
+    this.delegate.deleteEnv(this.model)
   },
 
   updateModel: function() {
